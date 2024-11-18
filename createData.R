@@ -2,6 +2,7 @@ library(deSolve)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(extraDistr)
 
 # 微分方程式の定義
 Ppun_aggr <- function(t, x, params) {
@@ -34,8 +35,11 @@ for (i in 1:10) {
   df <- as.data.frame(output)
   df$initial_value <- x0
 
-  # 二項分布に従ってばらつかせる
-  df$x_obs <- rbinom(n = nrow(df), size = N, prob = df$x / N)
+  # ベータ二項分布に従ってばらつかせる
+  alpha_beta <- 100  # ベータ分布の形状パラメータ1
+  beta_beta <- 100   # ベータ分布の形状パラメータ2
+  prob <- df$x / N
+  df$x_obs <- rbbinom(n = nrow(df), size = N, alpha = alpha_beta * prob, beta = beta_beta * (1 - prob))
   df$n_total <- N
   results[[i]] <- df
 }
