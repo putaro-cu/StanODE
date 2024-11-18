@@ -33,7 +33,7 @@ for (i in 1:10) {
   output <- ode(y = c(x = x0), times = times, func = Ppun_aggr, parms = params)
   df <- as.data.frame(output)
   df$initial_value <- x0
-  
+
   # 二項分布に従ってばらつかせる
   df$x_obs <- rbinom(n = nrow(df), size = N, prob = df$x / N)
   df$n_total <- N
