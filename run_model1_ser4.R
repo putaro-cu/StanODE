@@ -6,7 +6,7 @@ library(cmdstanr)
 library(tidybayes)
 
 raw_data <- read.csv("all_data.csv")
-data <- raw_data %>% filter(series == 4) %>% select(time, x_obs, n_total)
+data <- raw_data %>% filter(series == 7) %>% select(time, x_obs, n_total)
 
 input <- list(
   N = nrow(data),
@@ -33,10 +33,10 @@ df_xpred <- fit_alt$draws(format = "df") %>%
   median_hdi(.width = 0.95)  # 予測値の抽出と95%CIの計算
 
 plt_fitting <- ggplot(df_xpred, aes(x = time)) +
-  geom_ribbon(aes(ymin = .lower, ymax = .upper), fill = '#D53E4F', alpha = 0.4) +
-  geom_line(aes(y = mu_pred), linewidth = 1, col = "#D53E4F") +
-  geom_line(data = data.frame(input), aes(x = ts, y = x), col = "#D53E4F") +
-  geom_point(data = data.frame(input), aes(x = ts, y = x), col = "#D53E4F") +
+  geom_ribbon(aes(ymin = .lower, ymax = .upper), fill = '#179407', alpha = 0.4) +
+  geom_line(aes(y = mu_pred), linewidth = 1, col = "#179407") +
+  geom_line(data = data.frame(input), aes(x = ts, y = x), col = "#179407") +
+  geom_point(data = data.frame(input), aes(x = ts, y = x), col = "#179407") +
   ## ylim(c(0, 600)) +
   theme_classic() +
   labs(x = "時間", y = "観測個体数")

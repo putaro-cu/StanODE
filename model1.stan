@@ -43,7 +43,7 @@ model {
   b ~ normal(0, 100);
   s ~ normal(0, 100);
   sigma ~ cauchy(0, 2.5);
-  x0[1] ~ normal(100, 10);
+  x0[1] ~ uniform(0, n_total);
   
   array[N] vector[1] mu = ode_rk45(beekman, x0, 0, ts, par); 
   
