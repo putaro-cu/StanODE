@@ -36,7 +36,7 @@ for (i in 1:10) {
   
   # 二項分布に従ってばらつかせる
   df$x_obs <- rbinom(n = nrow(df), size = N, prob = df$x / N)
-  
+  df$n_total <- N
   results[[i]] <- df
 }
 
@@ -48,7 +48,7 @@ plt <- ggplot(all_data, aes(x = time, y = x_obs, color = as.factor(series))) +
   geom_point(size=0.8) +
   geom_line(aes(y = x), linetype = "solid") +
   labs(x = "時間", y = "観測個体数", color = "系列") +
-  theme_classic()+
-  theme(legend.position = "none") 
+  theme_classic() # +theme(legend.position = "none") 
 
 ggsave("plot.png", plot = plt, width = 1000, height = 800, units = "px")
+write.csv(all_data[all_data$time>0,], "all_data.csv", row.names = FALSE)
