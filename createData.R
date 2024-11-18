@@ -15,16 +15,16 @@ Ppun_aggr <- function(t, x, params) {
   list(c(dxdt))
 }
 
-# パラメータの固定値設定
+# パラメータの設定
 alpha <- 0.0045
-beta <- 0.00015   # 仮の値、適宜変更してください
+beta <- 0.00015
 s <- 10
 N <- 600
 times <- seq(0, 100, by = 1)  # 時間範囲
 
 # 初期値をランダムにして10個のデータを生成
-set.seed(100)  # 再現性のためのシード設定
-initial_values <- runif(10, min = 0, max = N)  # 0からNの範囲でランダムに初期値を生成
+set.seed(100) 
+initial_values <- runif(10, min = 0, max = N)
 results <- list()
 
 for (i in 1:10) {
@@ -32,7 +32,7 @@ for (i in 1:10) {
   params <- c(alpha = alpha, beta = beta, s = s, N = N)
   output <- ode(y = c(x = x0), times = times, func = Ppun_aggr, parms = params)
   df <- as.data.frame(output)
-  df$initial_value <- x0  # 初期値を記録
+  df$initial_value <- x0
   
   # 二項分布に従ってばらつかせる
   df$x_obs <- rbinom(n = nrow(df), size = N, prob = df$x / N)
