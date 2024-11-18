@@ -16,7 +16,7 @@ input <- list(
 )
 
 stan <- cmdstan_model('model1.stan')
-fit <- stan$sample(data = input, iter_warmup = 1000, iter_sampling = 1000, parallel_chains = 4, chains = 4, save_warmup = TRUE)
+fit <- stan$sample(data = input, iter_warmup = 2000, iter_sampling = 2000, parallel_chains = 4, chains = 4, save_warmup = TRUE)
 
 
 color_scheme_set("brewer-RdYlBu")
@@ -28,11 +28,17 @@ ggsave("trace_plot.png", plot = plt_trace, width = 1000, height = 800, units = "
 ggsave("dens_plot.png", plot = plt_dens, width = 1000, height = 800, units = "px", dpi=180)
 ggsave("pairs_plot.png", plot = plt_pairs, width = 1000, height = 800, units = "px", dpi=180)
 
-df_xpred <- fit$draws(format = "df") %>% spread_draws(mu_pred[time]) %>% median_hdi(.width = 0.95) ## 予測値の抽出と95%CIの計算
-plt_fitting <- ggplot(df_xpred, aes(x = time))
-plt_fitting <- plt_fitting + geom_ribbon(aes(ymin = .lower, ymax = .upper), fill = '#D53E4F', alpha = 0.4)
-plt_fitting <- plt_fitting + geom_line(aes(y = mu_pred), linewidth=1, col="#D53E4F")
-plt_fitting <- plt_fitting + geom_line(data=data.frame(input), aes(x=ts, y=x), col="#D53E4F")
-plt_fitting <- plt_fitting + geom_point(data=data.frame(input), aes(x=ts, y=x), col="#D53E4F")
-plt_fitting <- plt_fitting + ylim(c(0, 600)) + theme_classic() + labs(x = "時間", y = "観測個体数")
+df_xpred <- fit$draws(format = "df") %>%
+  spread_draws(mu_pred[time]) %>%
+  median_hdi(.width = 0.95)  # 予測値の抽出と95%CIの計算
+
+plt_fitting <- ggplot(df_xpred, aes(x = time)) +
+  geom_ribbon(aes(ymin = .lower, ymax = .upper), fill = '#D53E4F', alpha = 0.4) +
+  geom_line(aes(y = mu_pred), linewidth = 1, col = "#D53E4F") +
+  geom_line(data = data.frame(input), aes(x = ts, y = x), col = "#D53E4F") +
+  geom_point(data = data.frame(input), aes(x = ts, y = x), col = "#D53E4F") +
+  ylim(c(0, 600)) +
+  theme_classic() +
+  labs(x = "時間", y = "観測個体数")
+
 ggsave("fitting_plot.png", plot = plt_fitting, width = 1000, height = 800, units = "px", dpi=180)
