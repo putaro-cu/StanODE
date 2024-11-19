@@ -15,11 +15,11 @@ module SensitivityAnalysis
     iv = @variables t
     states = @variables x1(t) = 480
     @variables y(t)
-    ps = @parameters α=0.0045 β=0.00015 s=10 N=600
+    ps = @parameters α=0.0045 β=0.00015 s=10
     D = Differential(t)
 
     eqs = [
-        D(x1) ~ (α + β * x1) * (N - x1) - s * x1 / (s + x1)
+        D(x1) ~ (α + β * x1) * (300 - x1) - s * x1 / (s + x1)
     ]
 
     obs_eq = [y ~ x1]
@@ -37,7 +37,7 @@ module SensitivityAnalysis
     end
 
     
-    param_ranges = [(0.001, 0.01), (0.0001, 0.001), (1.0, 20.0), (500.0, 700.0)] # 動かすパラメータ範囲
+    param_ranges = [(0.001, 0.01), (0.0001, 0.001), (1.0, 50.0)] # 動かすパラメータ範囲
 
     sobol_result = gsa(model_func, Sobol(), param_ranges, samples=1000) # 感度分析の実行
     println(sobol_result)
@@ -45,7 +45,7 @@ module SensitivityAnalysis
     first_order = sobol_result.S1[:]
     total_order = sobol_result.ST[:]
 
-    param_names = ["α", "β", "s", "N"]
+    param_names = ["α", "β", "s"]
     p1 = bar(param_names, first_order, legend=:none)
     xlabel!(p1, "Parameters")
     ylabel!(p1, "First Order")
