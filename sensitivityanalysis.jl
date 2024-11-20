@@ -13,7 +13,7 @@ module SensitivityAnalysis
     using Plots
 
     iv = @variables t
-    states = @variables x1(t) = 480
+    states = @variables x1(t)
     @variables y(t)
     ps = @parameters α=0.0045 β=0.00015 s=10
     D = Differential(t)
@@ -31,13 +31,13 @@ module SensitivityAnalysis
     println(sia_result)
 
     function model_func(p)
-        prob = ODEProblem(model, [480.0], (0.0, 100.0), p)
+        prob = ODEProblem(model, [102.2], (0.0, 100.0), p)
         sol = solve(prob, Tsit5())
         return sol[1, end]
     end
 
     
-    param_ranges = [(0.001, 0.01), (0.0001, 0.001), (1.0, 50.0)] # 動かすパラメータ範囲
+    param_ranges = [(0.0001, 0.01), (0.00001, 0.001), (0.1, 15.0)] # 動かすパラメータ範囲
 
     sobol_result = gsa(model_func, Sobol(), param_ranges, samples=1000) # 感度分析の実行
     println(sobol_result)
