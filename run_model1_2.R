@@ -16,7 +16,7 @@ input <- list(
 )
 
 stan <- cmdstan_model('model1_2.stan')
-fit <- stan$sample(data = input, iter_warmup = 2000, iter_sampling = 2000, parallel_chains = 4, chains = 4, save_warmup = TRUE)
+fit <- stan$sample(data = input, iter_warmup = 5000, iter_sampling = 5000, parallel_chains = 4, chains = 4, save_warmup = TRUE, adapt_delta = 0.9)
 
 
 color_scheme_set("brewer-RdYlBu")

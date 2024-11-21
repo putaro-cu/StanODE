@@ -6,7 +6,7 @@ functions { // モデル式の宣言
     real s = par[2];
     real n_total = par[3];
     
-    dxdt[1] = (0.001 + b * x[1]) * (n_total - x[1]) - (s * x[1]) / (s + x[1]);
+    dxdt[1] = (0.005 + b * x[1]) * (n_total - x[1]) - (s * x[1]) / (s + x[1]);
     
     return dxdt;
   }
