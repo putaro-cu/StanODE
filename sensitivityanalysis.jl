@@ -12,7 +12,7 @@ ps = @parameters α=0.0045 β=0.00015 s=10
 D = Differential(t)
 
 eqs = [
-    D(x1) ~ (α + β * x1) * (300 - x1) - s * x1 / (s + x1)
+    D(x1) ~ (α + β * x1) * (600 - x1) - s * x1 / (s + x1)
 ]
 
 obs_eq = [y ~ x1]
@@ -30,7 +30,7 @@ function model_func(p)
 end
 
 
-param_ranges = [(0.0001, 0.01), (0.00001, 0.001), (1, 15.0)] # 動かすパラメータ範囲
+param_ranges = [(0.0001, 0.01), (0.00001, 0.001), (1, 50.0)] # 動かすパラメータ範囲
 
 sobol_result = gsa(model_func, Sobol(), param_ranges, samples=1000) # 感度分析の実行
 println(sobol_result)

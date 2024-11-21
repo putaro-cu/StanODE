@@ -42,3 +42,13 @@ plt_fitting <- ggplot(df_xpred, aes(x = time)) +
   labs(x = "時間", y = "観測個体数")
 
 ggsave("fitting_plot1_2.png", plot = plt_fitting, width = 1000, height = 800, units = "px", dpi=180)
+
+fit$draws(format = "df") %>%
+    spread_draws(b,s,sigma) %>%
+    mean_qi() # EAPと95%ETI
+fit$draws(format = "df") %>%
+    spread_draws(b,s,sigma) %>%
+    mode_hdi() # MAPと95%HDI
+fit$draws(format = "df") %>%
+    spread_draws(b,s,sigma) %>%
+    median_hdi() # MEDと95%HDI
