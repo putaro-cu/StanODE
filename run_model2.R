@@ -30,8 +30,8 @@ plt_dens <- mcmc_dens_overlay(fit$draws(c("a", "b", "s"),inc_warmup = F)) + geom
 color_scheme_set("blue")
 plt_trace <- mcmc_trace(fit$draws(c("a", "b", "s"),inc_warmup = T),n_warmup = 2000) + theme_classic()
 plt_pairs <- mcmc_pairs(fit$draws(c("a", "b", "s"),inc_warmup = F), off_diag_args = list(size = 0.5, alpha = 0.5))
-ggsave("trace_plot2.png", plot = plt_trace, width = 1000, height = 800, units = "px", dpi=180)
-ggsave("dens_plot2.png", plot = plt_dens, width = 1000, height = 800, units = "px", dpi=180)
+ggsave("trace_plot2.png", plot = plt_trace, width = 1000, height = 400, units = "px", dpi=180)
+ggsave("dens_plot2.png", plot = plt_dens, width = 1000, height = 400, units = "px", dpi=180)
 ggsave("pairs_plot2.png", plot = plt_pairs, width = 1000, height = 800, units = "px", dpi=180)
 
 df_xpred <- fit$draws(format = "df") %>%
