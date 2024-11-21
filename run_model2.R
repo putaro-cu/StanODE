@@ -48,8 +48,8 @@ plt_fitting <- ggplot(df1, aes(x = time)) +
   geom_line(aes(y = mu_pred), linewidth = 1, col = "#D53E4F") +
   geom_ribbon(data = df2, aes(ymin = .lower, ymax = .upper), fill = '#32CD32', alpha = 0.4) +
   geom_line(data = df2, aes(y = mu_pred), linewidth=1, col="#32CD32") +
-  geom_ribbon(data = df3, aes(ymin = .lower, ymax = .upper), fill = '#4169E1', alpha = 0.4) +
-  geom_line(data = df3, aes(y = mu_pred), linewidth=1, col="#4169E1") +
+  geom_ribbon(data = df3, aes(ymin = .lower, ymax = .upper), fill = '#4169E2', alpha = 0.4) +
+  geom_line(data = df3, aes(y = mu_pred), linewidth=1, col="#4169E2") +
   geom_line(data=data, aes(x = time, y = x_obs, group = as.factor(series), col = as.factor(series))) +
   geom_point(data=data, aes(x = time, y = x_obs, group = as.factor(series), col = as.factor(series))) +
   ylim(c(0, 600)) +
