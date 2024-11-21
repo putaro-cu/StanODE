@@ -52,7 +52,6 @@ plt_fitting <- ggplot(df1, aes(x = time)) +
   geom_line(data = df3, aes(y = mu_pred), linewidth=1, col="#4169E2") +
   geom_line(data=data, aes(x = time, y = x_obs, group = as.factor(series), col = as.factor(series))) +
   geom_point(data=data, aes(x = time, y = x_obs, group = as.factor(series), col = as.factor(series))) +
-  ylim(c(0, 600)) +
   theme_classic() +
   labs(x = "時間", y = "観測個体数")
 
