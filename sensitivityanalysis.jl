@@ -18,7 +18,7 @@ eqs = [
 obs_eq = [y ~ x1]
 measured_quantities = [y ~ x1]
 
-@named model = ODESystem(eqs, t, states, ps; observed = obs_eq)
+@named model = ODESystem(eqs, t, states, ps, observed = obs_eq)
 
 sia_result = assess_identifiability(model, measured_quantities = measured_quantities, p = 0.99) # 識別可能性解析の実行
 println(sia_result)
@@ -63,7 +63,7 @@ eqs = [
 obs_eq = [y1 ~ x1]
 measured_quantities = [y1 ~ x1]
 
-@named model = ODESystem(eqs, t, states, ps; observed = obs_eq)
+@named model = ODESystem(eqs, t, states, ps, observed = obs_eq)
 
 sia_result = assess_identifiability(model, measured_quantities = measured_quantities, p = 0.99) # 識別可能性解析の実行
 println(sia_result)
