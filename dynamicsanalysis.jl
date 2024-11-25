@@ -2,12 +2,12 @@ using ModelingToolkit
 using DifferentialEquations
 using Random
 using GLMakie
-GLMakie.activate!(inline = true)  # インライン表示を有効化
+GLMakie.activate!(inline=true)  # インライン表示を有効化
 
 iv = @variables t
 states = @variables x(t)
 @variables y(t)
-ps = @parameters α=0.0045 β=0.00015 s=10 N=600
+ps = @parameters α = 0.0045 β = 0.00015 s = 10 N = 600
 D = Differential(t)
 
 eqs = [
@@ -15,7 +15,7 @@ eqs = [
 ]
 obs_eq = [y ~ x]
 
-@mtkbuild model = ODESystem(eqs, t, states, ps, observed = obs_eq)
+@mtkbuild model = ODESystem(eqs, t, states, ps, observed=obs_eq)
 
 # 初期条件と時間範囲の設定
 u0 = [x => 200.0]  # 初期条件
@@ -26,10 +26,10 @@ prob = ODEProblem(model, u0, tspan)
 sol = solve(prob, Tsit5(), abstol=1e-6, reltol=1e-6)
 
 # 結果をプロット
-fig = Figure(size = (1000, 800))
+fig = Figure(size=(1000, 800))
 ax = Axis(fig[1, 1], xlabel="Time", ylabel="x(t)", xlabelsize=40, ylabelsize=40, xticklabelsize=30, yticklabelsize=30, limits=(0, 200, 0, 600))
-lines!(ax, sol.t, sol[x], linewidth=6)
-set_theme!(figure_padding = (50,50,50,50))
+lines!(ax, sol.t, sol[x], linewidth=5)
+set_theme!(figure_padding=(50, 50, 50, 50))
 display(fig)
 
 save("plot3.png", fig)
