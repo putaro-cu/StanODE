@@ -1,8 +1,8 @@
 using ModelingToolkit
 using DifferentialEquations
 using Random
-using GLMakie
-GLMakie.activate!(inline=true)  # インライン表示を有効化
+using CairoMakie
+using BifurcationKit
 
 iv = @variables t
 states = @variables x(t)
@@ -23,11 +23,11 @@ tspan = (0.0, 200.0)  # 時間範囲
 
 # 微分方程式を解く
 prob = ODEProblem(model, u0, tspan)
-sol = solve(prob, Tsit5(), abstol=1e-6, reltol=1e-6)
+sol = DifferentialEquations.solve(prob, Tsit5(), abstol=1e-6, reltol=1e-6)
 
 # 結果をプロット
 fig = Figure(size=(1000, 800))
-ax = Axis(fig[1, 1], xlabel="Time", ylabel="x(t)", xlabelsize=40, ylabelsize=40, xticklabelsize=30, yticklabelsize=30, limits=(nothing, nothing, 0, 600))
+ax = Axis(fig[1, 1], xlabel="Time", ylabel="x", xlabelsize=40, ylabelsize=40, xticklabelsize=30, yticklabelsize=30, limits=(nothing, nothing, 0, 600))
 lines!(ax, sol.t, sol[x], linewidth=5)
 set_theme!(figure_padding=(50, 50, 50, 50))
 display(fig)

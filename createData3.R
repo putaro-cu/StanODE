@@ -20,16 +20,20 @@ Ppun_aggr <- function(t, x, params) {
 alpha <- 0.0045
 beta <- 0.00015
 s <- 10
+sigma_alpha <- 0.0001
+sigma_beta <- 0.00001
+sigma_s <- 0.1
 N <- 600
 times <- seq(0, 100, by = 1)  # 時間範囲
 
+# 初期値をランダムにして5個のデータを生成
 set.seed(100) 
-initial_values <- c(2.0, 100, 200)
+initial_values <- runif(5, min = 0, max = N)
 results <- list()
 
 for (i in 1:length(initial_values)) {
   x0 <- initial_values[i]
-  params <- c(alpha = alpha, beta = beta, s = s, N = N)
+  params <- c(alpha = rnorm(1, alpha, sigma_alpha), beta = rnorm(1, beta, sigma_beta), s = rnorm(1, s, sigma_s), N = N)
   output <- ode(y = c(x = x0), times = times, func = Ppun_aggr, parms = params)
   df <- as.data.frame(output)
   df$initial_value <- x0
@@ -53,5 +57,5 @@ plt <- ggplot(all_data, aes(x = time, y = x_obs, color = as.factor(series))) +
   labs(x = "時間", y = "観測個体数", color = "系列") +
   theme_classic() # +theme(legend.position = "none") 
 
-ggsave("plot2.png", plot = plt, width = 1000, height = 800, units = "px")
-write.csv(all_data[all_data$time>0,], "all_data_2.csv", row.names = FALSE)
+ggsave("plot3.png", plot = plt, width = 1000, height = 800, units = "px")
+write.csv(all_data[all_data$time>0,], "all_data_3.csv", row.names = FALSE)
