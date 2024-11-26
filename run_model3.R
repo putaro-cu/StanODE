@@ -39,7 +39,7 @@ plt_trace <- mcmc_trace(fit$draws(c("mu_a", "mu_b", "mu_s", "sigma_a", "sigma_b"
 plt_pairs <- mcmc_pairs(fit$draws(c("mu_a", "mu_b", "mu_s"), inc_warmup = F), off_diag_args = list(size = 0.5, alpha = 0.5))
 plt_pairs2 <- mcmc_pairs(fit$draws(c("sigma_a", "sigma_b", "sigma_s"), inc_warmup = F), off_diag_args = list(size = 0.5, alpha = 0.5))
 
-ggsave("trace_plot3.png", plot = plt_trace, width = 1000, height = 800, units = "px", dpi = 180)
+ggsave("trace_plot3.png", plot = plt_trace, width = 1500, height = 800, units = "px", dpi = 180)
 ggsave("dens_plot3-1.png", plot = plt_dens, width = 1000, height = 400, units = "px", dpi = 180)
 ggsave("dens_plot3-2.png", plot = plt_dens2, width = 1000, height = 400, units = "px", dpi = 180)
 ggsave("pairs_plot3-1.png", plot = plt_pairs, width = 1000, height = 800, units = "px", dpi = 180)
