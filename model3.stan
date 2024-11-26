@@ -22,15 +22,15 @@ data {
 }
 
 parameters {
-  array[Series] real<lower=0> a;
-  array[Series] real<lower=0> b;
-  array[Series] real<lower=0> s;
   real<lower=0> mu_a;
   real<lower=0> mu_b;
   real<lower=0> mu_s;
   real<lower=0> sigma_a;
   real<lower=0> sigma_b;
   real<lower=0> sigma_s;
+  array[Series] real<lower=0> a;
+  array[Series] real<lower=0> b;
+  array[Series] real<lower=0> s;
   array[Series] real<lower=0> sigma;
   array[Series] vector<lower=0>[1] x0; 
 }
