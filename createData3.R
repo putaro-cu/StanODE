@@ -20,14 +20,14 @@ Ppun_aggr <- function(t, x, params) {
 alpha <- 0.0045
 beta <- 0.00015
 s <- 10
-sigma_alpha <- 0.0001
-sigma_beta <- 0.00001
+sigma_alpha <- 0.0005
+sigma_beta <- 0.00005
 sigma_s <- 0.1
 N <- 600
 times <- seq(0, 100, by = 1) # 時間範囲
 
 # 6個のデータを生成
-set.seed(100)
+set.seed(111) 
 initial_values <- c(10, 100, 200, 300, 400, 500)
 results <- list()
 
