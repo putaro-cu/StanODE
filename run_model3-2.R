@@ -36,7 +36,9 @@ ggsave("pairs_plot4.png", plot = plt_pairs, width = 1000, height = 800, units = 
 
 df_xpred <- fit_alt$draws(format = "df") %>%
   spread_draws(mu_pred[series,time,vector]) %>%
-  mode_hdi(.width = 0.95)  # MAP推定値と95%CIの計算
+  mean_qi(.width = 0.95)  # MAP推定値と95%CIの計算
+
+df_list <- split(df_xpred, df_xpred$series) # series列で分割してリストに格納
 
 list2env(setNames(df_list, paste0("df", 1:6)), envir = .GlobalEnv) # 各リスト要素を df1, df2, df3 に代入
 
