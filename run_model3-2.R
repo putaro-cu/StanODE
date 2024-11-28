@@ -22,19 +22,19 @@ input <- list(
 )
 
 stan <- cmdstan_model('model2.stan')
-fit <- stan$sample(data = input, iter_warmup = 3000, iter_sampling = 3000, parallel_chains = 4, chains = 4, save_warmup = TRUE)
+fit_alt <- stan$sample(data = input, iter_warmup = 3000, iter_sampling = 3000, parallel_chains = 4, chains = 4, save_warmup = TRUE)
 
 
 color_scheme_set("brewer-RdYlBu")
-plt_dens <- mcmc_dens_overlay(fit$draws(c("a", "b", "s"),inc_warmup = F)) + geom_density(linewidth = 1) + theme_classic()
+plt_dens <- mcmc_dens_overlay(fit_alt$draws(c("a", "b", "s"),inc_warmup = F)) + geom_density(linewidth = 1) + theme_classic()
 color_scheme_set("blue")
-plt_trace <- mcmc_trace(fit$draws(c("a", "b", "s"),inc_warmup = T),n_warmup = 3000) + theme_classic()
-plt_pairs <- mcmc_pairs(fit$draws(c("a", "b", "s"),inc_warmup = F), off_diag_args = list(size = 0.5, alpha = 0.5))
+plt_trace <- mcmc_trace(fit_alt$draws(c("a", "b", "s"),inc_warmup = T),n_warmup = 3000) + theme_classic()
+plt_pairs <- mcmc_pairs(fit_alt$draws(c("a", "b", "s"),inc_warmup = F), off_diag_args = list(size = 0.5, alpha = 0.5))
 ggsave("trace_plot4.png", plot = plt_trace, width = 1500, height = 400, units = "px", dpi=180)
 ggsave("dens_plot4.png", plot = plt_dens, width = 1000, height = 400, units = "px", dpi=180)
 ggsave("pairs_plot4.png", plot = plt_pairs, width = 1000, height = 800, units = "px", dpi=180)
 
-df_xpred <- fit$draws(format = "df") %>%
+df_xpred <- fit_alt$draws(format = "df") %>%
   spread_draws(mu_pred[series,time,vector]) %>%
   mode_hdi(.width = 0.95)  # MAP推定値と95%CIの計算
 
